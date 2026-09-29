@@ -1,0 +1,97 @@
+@import '@fontsource-variable/inter';
+@import 'quill/dist/quill.core.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --canvas: 246 247 251;
+    --surface: 255 255 255;
+    --surface-2: 241 243 249;
+    --line: 226 230 240;
+    --ink: 17 24 39;
+    --muted: 100 110 130;
+    --brand: 79 70 229;
+    --brand-hover: 67 56 202;
+    --brand-soft: 238 240 255;
+    --brand-fg: 255 255 255;
+    --danger: 220 38 38;
+    --ok: 22 163 74;
+    --warn: 217 119 6;
+    --shadow: 15 23 42;
+    color-scheme: light;
+  }
+  .dark {
+    --canvas: 10 12 19;
+    --surface: 19 22 33;
+    --surface-2: 28 32 46;
+    --line: 41 46 65;
+    --ink: 236 238 246;
+    --muted: 148 157 180;
+    --brand: 129 140 248;
+    --brand-hover: 165 180 252;
+    --brand-soft: 35 39 76;
+    --brand-fg: 12 14 38;
+    --danger: 248 113 113;
+    --ok: 74 222 128;
+    --warn: 251 191 36;
+    --shadow: 0 0 0;
+    color-scheme: dark;
+  }
+  html { -webkit-tap-highlight-color: transparent; }
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: rgb(var(--brand) / 0.28); }
+  :focus-visible { @apply outline-none ring-2 ring-brand/60 ring-offset-2 ring-offset-canvas; }
+  button { @apply select-none; }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium
+           transition duration-150 active:scale-[.98] disabled:pointer-events-none disabled:opacity-50;
+  }
+  .btn-primary { @apply btn bg-brand text-brand-fg shadow-card hover:bg-brand-hover; }
+  .btn-secondary { @apply btn border border-line bg-surface text-ink hover:bg-surface-2; }
+  .btn-ghost { @apply btn text-muted hover:bg-surface-2 hover:text-ink; }
+  .btn-danger { @apply btn bg-danger text-white hover:opacity-90; }
+  .icon-btn {
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted transition
+           hover:bg-surface-2 hover:text-ink active:scale-95 disabled:opacity-40;
+  }
+  .input {
+    @apply w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-sm text-ink
+           placeholder:text-muted/70 transition focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15;
+  }
+  .card { @apply rounded-2xl border border-line bg-surface shadow-card; }
+  .skeleton { @apply relative overflow-hidden rounded-lg bg-surface-2; }
+  .skeleton::after {
+    content: ''; position: absolute; inset: 0; transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgb(var(--surface) / .7), transparent);
+    animation: shimmer 1.4s infinite;
+  }
+}
+
+/* ---------- editor ---------- */
+.paper .ql-container { font-family: inherit; font-size: 16px; }
+.paper .ql-editor {
+  min-height: 60vh; padding: 56px 64px 96px; line-height: 1.75; outline: none;
+  color: rgb(var(--ink)); tab-size: 4; caret-color: rgb(var(--brand));
+}
+.paper .ql-editor.ql-blank::before {
+  left: 64px; right: 64px; color: rgb(var(--muted) / .6); font-style: normal;
+}
+.paper .ql-editor p { margin: 0 0 .35em; }
+@media (max-width: 640px) {
+  .paper .ql-editor { padding: 28px 20px 72px; }
+  .paper .ql-editor.ql-blank::before { left: 20px; right: 20px; }
+}
+.ql-cursor .ql-cursor-flag { font-family: inherit; font-size: 11px; font-weight: 600; border-radius: 6px 6px 6px 0; padding: 2px 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

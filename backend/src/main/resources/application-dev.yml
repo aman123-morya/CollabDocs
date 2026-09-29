@@ -1,0 +1,9 @@
+# Local development only  ->  ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+# NEVER use this secret in production.
+app:
+  jwt:
+    secret: ZGV2LW9ubHktc2VjcmV0LWNoYW5nZS1tZS1iZWZvcmUtZGVwbG95aW5nLXRvLXByb2R1Y3Rpb24tMDEyMzQ1Njc4OQ==
+
+logging:
+  level:
+    com.devansh: debug
